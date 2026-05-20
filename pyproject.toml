@@ -1,0 +1,24 @@
+[project]
+name = "jlink-mcp"
+version = "0.1.0"
+description = "JLink MCP Server — AI-powered microcontroller debugging via Model Context Protocol"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "pylink-square>=0.12.0",
+    "pyelftools>=0.31",
+]
+
+[project.scripts]
+jlink-mcp = "server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.uv]
+dev-dependencies = []

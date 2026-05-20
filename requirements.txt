@@ -1,0 +1,3 @@
+mcp[cli]>=1.0.0
+pylink-square>=0.12.0
+pyelftools>=0.31
