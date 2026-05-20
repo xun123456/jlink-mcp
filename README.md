@@ -315,3 +315,8 @@ MIT License — 可自由使用、修改和分发。
 - **JLink 接口**: pylink-square → JLinkARM.dll
 - **符号解析**: pyelftools (ELF/DWARF)
 - **支持平台**: Windows（JLinkARM.dll）
+
+## License
+
+MIT — 详见 [LICENSE](LICENSE)。
+
