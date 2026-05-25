@@ -77,15 +77,21 @@ class JLinkDebugger:
             self.disconnect()
 
         try:
+            # 通过环境变量 JLINK_DLL 指定 DLL 路径,默认走低版本目录
+            # 避免高版本 JLink 弹"克隆设备"告警
+            import os
+            dll_path = os.environ.get("JLINK_DLL", r"C:\Program Files\SEGGER\JLink\JLinkARM.dll")
+            jlink_lib = pylink.Library(dllpath=dll_path) if os.path.isfile(dll_path) else None
+
             # 打开 JLink
             if ip_addr:
-                self._jlink = pylink.JLink()
+                self._jlink = pylink.JLink(lib=jlink_lib)
                 self._jlink.open(ip_addr=ip_addr)
             elif serial_no:
-                self._jlink = pylink.JLink()
+                self._jlink = pylink.JLink(lib=jlink_lib)
                 self._jlink.open(serial_no=serial_no)
             else:
-                self._jlink = pylink.JLink()
+                self._jlink = pylink.JLink(lib=jlink_lib)
                 self._jlink.open()
 
             # 设置接口类型
