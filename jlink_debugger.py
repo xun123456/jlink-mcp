@@ -79,8 +79,15 @@ class JLinkDebugger:
         try:
             # 通过环境变量 JLINK_DLL 指定 DLL 路径,默认走低版本目录
             # 避免高版本 JLink 弹"克隆设备"告警
-            import os
-            dll_path = os.environ.get("JLINK_DLL", r"C:\Program Files\SEGGER\JLink\JLinkARM.dll")
+            # Windows 64 位 Python 必须加载 JLink_x64.dll (JLinkARM.dll 是 32 位)
+            import os, struct
+            is_64bit = struct.calcsize("P") == 8
+            default_dll = (
+                r"C:\Program Files\SEGGER\JLink\JLink_x64.dll"
+                if is_64bit
+                else r"C:\Program Files\SEGGER\JLink\JLinkARM.dll"
+            )
+            dll_path = os.environ.get("JLINK_DLL", default_dll)
             jlink_lib = pylink.Library(dllpath=dll_path) if os.path.isfile(dll_path) else None
 
             # 打开 JLink
